@@ -104,8 +104,8 @@ export async function POST(req) {
     const data = await req.json();
     console.log("Received data:", data);
     
-    console.log("API Key Sent in Request:", `Bearer ${API_KEY}`);
-    console.log("API_KEY Loaded:", API_KEY ? "Yes" : "No");
+    // console.log("API Key Sent in Request:", `Bearer ${API_KEY}`);
+    // console.log("API_KEY Loaded:", API_KEY ? "Yes" : "No");
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
@@ -140,4 +140,4 @@ export async function POST(req) {
 }
 
 
-console.log("API Key Sent in Request:", `Bearer ${API_KEY}`);
+// console.log("API Key Sent in Request:", `Bearer ${API_KEY}`);

@@ -111,97 +111,77 @@ export default function Home() {
 
     return (
         <>
-            <Box 
-            // background screen
-                width="100vw" 
-                height="100vh"
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                bgcolor="#f5f5f5" 
-            > 
-                <Box 
-                //title bar
-                    width="100%" 
-                    bgcolor="#14BF96" 
-                    color="white" 
-                    p={2} 
-                    textAlign="center"
-                >
-                    <Typography variant="h5" fontSize={{ xs: '1.2rem', sm: '1.5rem', md: '2rem' }}>Customer Service AI</Typography>
-                </Box>
-                
-                <Stack 
-                    direction="column"
-                    width={{ xs: '90%', sm: '80%', md: '600px' }} 
-                    height={{ xs: '80%', md: '700px' }}
-                    border="1px solid #ddd"
-                    bgcolor="white"
+<Box 
+    position="fixed" 
+    bottom={20} 
+    right={20} 
+    width="350px" 
+    height="500px"
+    display="flex"
+    flexDirection="column"
+    justifyContent="space-between"
+    bgcolor="white"
+    borderRadius={4}
+    boxShadow="0 4px 8px rgba(0,0,0,0.2)"
+> 
+    {/* Title Bar */}
+    <Box 
+        width="100%" 
+        bgcolor="#14BF96" 
+        color="white" 
+        p={1}   // Padding kam kiya
+        textAlign="center"
+    >
+        <Typography variant="h6" fontSize="1rem">AI Support</Typography> 
+    </Box>
+
+    {/* Chat Messages */}
+    <Stack 
+        direction="column" 
+        spacing={2}
+        flexGrow={1} // Yeh ensure karega ki chat area adjustable ho
+        overflow="auto"
+        p={2}
+    >
+        {messages.map((message, index) => (
+            <Box key={index} display="flex" justifyContent={message.role === "assistant" ? "flex-start" : "flex-end"}>
+                <Box bgcolor={message.role === "assistant" ? "#66C7C2" : "#C3F0E0"}
+                    color="black"
+                    borderRadius={16}
                     p={2}
-                    spacing={3}
-                    borderRadius={4}
-                    boxShadow="0 4px 8px rgba(0,0,0,0.1)"
-                    mt={2}
+                    maxWidth="85%"
+                    boxShadow="0 2px 4px rgba(0,0,0,0.1)"
+                    sx={{ wordBreak: 'break-word' }}
                 >
-                    <Stack 
-                        direction="column" 
-                        spacing={2}
-                        flexGrow={1}
-                        overflow="auto" // enable scrolling
-                        maxHeight="100%"
-                    >
-                        {
-                            // message display 
-                            messages.map((message, index) => (
-                                <Box key={index} display="flex" justifyContent={
-                                    message.role === "assistant" ? "flex-start" : "flex-end"
-                                }>
-                                    <Box bgcolor={
-                                        message.role === "assistant" ? "#66C7C2" : "#C3F0E0"
-                                    }
-                                    color="black"
-                                    borderRadius={16}
-                                    p={3} 
-                                    maxWidth="85%" 
-                                    boxShadow="0 2px 4px rgba(0,0,0,0.1)"
-                                    sx={{ wordBreak: 'break-word' }}
-                                    >
-                                        {message.content}
-                                    </Box>
-                                </Box>
-                            ))
-                        }
-                        <div ref={messagesEndRef} />
-                    </Stack>
-                    <Stack direction="row" spacing={2}>
-                        <TextField 
-                        //input field
-                            label="Message"
-                            fullWidth
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            onKeyDown={handleKeyPress}
-                            variant="outlined"
-                            InputProps={{
-                                sx: { fontSize: { xs: '0.8rem', sm: '1rem' } }
-                            }}
-                        />
-                        <Button 
-                        //send button
-                            variant="contained" 
-                            color="primary" 
-                            onClick={sendMessage}
-                            sx={{ 
-                                fontSize: { xs: '0.8rem', sm: '1rem' }, 
-                                px: { xs: 1, sm: 2 } 
-                            }}
-                        >
-                            Send
-                        </Button>
-                    </Stack>
-                </Stack>
+                    {message.content}
+                </Box>
             </Box>
+        ))}
+        <div ref={messagesEndRef} />
+    </Stack>
+
+    {/* Input Field and Send Button */}
+    <Stack direction="row" spacing={1} p={1} alignItems="center">
+        <TextField 
+            label="Message"
+            fullWidth
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyPress}
+            variant="outlined"
+            size="small" // Chhota banaya
+        />
+        <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={sendMessage}
+            sx={{ minWidth: "70px", fontSize: "0.8rem", px: 1 }}
+        >
+            Send
+        </Button>
+    </Stack>
+</Box>
+
             <Analytics />
         </>
     );
